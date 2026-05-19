@@ -2,9 +2,18 @@
 
 ## Project Overview
 
-Enterprise-style Active Directory Attack & Detection Lab simulating
-identity attacks, Windows event logging, and SOC investigation
-workflows.
+ADSOC is an enterprise-style Active Directory Attack & Detection Lab
+designed to simulate identity-based attacks, Windows authentication
+workflows, and SOC investigation scenarios in a controlled environment.
+
+The goal of this project is to build hands-on experience with:
+
+- Active Directory administration
+- Windows authentication and identity management
+- Enterprise user/group modelling
+- Security event generation and log analysis
+- Identity-focused attack simulation
+- SOC detection engineering and investigation workflows
 
 ---
 
@@ -20,117 +29,103 @@ Windows Server 2022 (DC01)
 Windows 11 Client
 ```
 
-### Components
-
-#### 1. Windows Server 2022 (DC01)
-
-Purpose: - Future Domain Controller - Active Directory services - DNS
-and authentication infrastructure
-
-Configuration completed: - Hostname renamed to `DC01` - Static IP
-configured - AD DS role installed
-
-**Screenshot -- Windows Server VM**
-
-Replace with your screenshot:
-
-![Windows Server Placeholder](screenshots/windows-server-overview.png)
+### Infrastructure Components
 
 ---
 
-#### 2. Windows Server Static IP Configuration
-
-Configured settings:
-
-- IP Address: `192.168.100.10`
-- Subnet Mask: `255.255.255.0`
-- Default Gateway: `192.168.100.1`
-- Preferred DNS: `127.0.0.1`
-
-**Screenshot -- Static IP Configuration**
-
-Replace with your screenshot:
-
-![Static IP Placeholder](screenshots/static-ip-config.png)
+Component Purpose
 
 ---
 
-#### 3. Active Directory Domain Services (AD DS)
+Kali Linux Attack simulation and adversary
+activity
 
-Installed role: - Active Directory Domain Services (AD DS)
+Windows Server 2022 (DC01) Domain Controller, DNS,
+authentication infrastructure
 
-Purpose: - Prepare server for promotion into a Domain Controller
-
-**Screenshot -- Server Manager (AD DS Installed)**
-
-Replace with your screenshot:
-
-![AD DS Placeholder](screenshots/ad-ds-installed.png)
+Windows 11 Client Domain-joined workstation for
+authentication, telemetry, and
+attack simulation
 
 ---
 
-#### 4. Hostname Verification
+---
 
-Verified hostname:
+## Current Progress
 
-```powershell
-hostname
-```
-
-Expected output:
-
-```text
-DC01
-```
-
-**Screenshot -- Hostname Verification**
-
-Replace with your screenshot:
-
-![Hostname Placeholder](screenshots/hostname-dc01.png)
+- [x] Windows Server 2022 deployed
+- [x] Static IP configured
+- [x] Active Directory Domain Services (AD DS) installed
+- [x] Domain Controller promotion completed
+- [x] Enterprise OU, user, and group structure configured
+- [ ] Windows 11 domain join
+- [ ] Identity attack simulation
+- [ ] Detection engineering and investigation workflows
 
 ---
 
-## Folder Structure
+# Phase 1 -- Active Directory Infrastructure
 
-```text
-ADSOC-Active-Directory-Attack-Detection-Lab/
-│
-├── README.md
-├── screenshots/
-│
-├── docs/
-│   ├── architecture.md
-│   ├── attack-scenarios.md
-│   └── detections.md
-│
-├── detections/
-│   ├── kql/
-│   └── notes/
-│
-└── reports/
-```
+## Windows Server Deployment
+
+Windows Server 2022 was deployed and configured as the foundation of the
+Active Directory environment.
+
+### Configuration Completed
+
+- Hostname configured as `DC01`
+- Static IP configuration applied
+- Active Directory Domain Services (AD DS) installed
+
+### Environment Snapshot
+
+![Windows Server](screenshots/windows-server-overview.png)
 
 ---
 
-#### 5. Active Directory Domain Setup
+## Static IP Configuration
 
-Successfully promoted `DC01` to a Domain Controller using Active Directory Domain Services (AD DS), establishing the internal domain environment for identity management and authentication testing.
+A static IP configuration was applied to ensure stable DNS resolution,
+authentication, and Active Directory functionality.
 
-### Configuration
+Setting Value
 
-- Domain: `adsoc.local`
-- NetBIOS: `ADSOC`
-- Server Role: Domain Controller + DNS
+---
 
-### Outcome
+IP Address `192.168.100.10`
+Subnet Mask `255.255.255.0`
+Default Gateway `192.168.100.1`
+Preferred DNS `127.0.0.1`
 
-The environment now supports:
+### Configuration Snapshot
 
-- Centralised authentication
-- Domain-based identity management
-- Group-based administration
-- Enterprise-style Windows security event generation for SOC detection scenarios
+![Static IP Configuration](screenshots/static-ip-config.png)
+
+---
+
+## Active Directory Domain Services (AD DS)
+
+The Active Directory Domain Services role was installed to prepare the
+server for Domain Controller promotion.
+
+### Configuration Snapshot
+
+![AD DS Installed](screenshots/ad-ds-installed.png)
+
+---
+
+## Domain Controller Configuration
+
+`DC01` was promoted to a Domain Controller using Active Directory Domain
+Services (AD DS), establishing the internal enterprise domain.
+
+Setting Value
+
+---
+
+Domain Name `adsoc.local`
+NetBIOS Name `ADSOC`
+Server Role Domain Controller + DNS
 
 ### Verification
 
@@ -138,10 +133,99 @@ The environment now supports:
 whoami
 ```
 
-Output:
+Expected output:
 
 ```text
 adsoc\administrator
 ```
 
-![Domain Controller Verification](screenshots/domain-controller-verification.png)
+### Verification Snapshot
+
+![Domain Controller
+Verification](screenshots/domain-controller-verification.png)
+
+---
+
+## Active Directory Enterprise Configuration
+
+A structured Active Directory environment was created to simulate a
+realistic enterprise identity infrastructure.
+
+### Organisational Units (OUs)
+
+- IT
+- HR
+- Finance
+- Servers
+- Workstations
+- Security Groups
+
+### Security Groups
+
+- IT_Admins
+- HR_Users
+- Finance_Users
+- SOC_Analysts
+
+### Example Domain Users
+
+User Department Security Group
+
+---
+
+john.smith IT IT_Admins
+emma.wilson HR HR_Users
+alex.brown Finance Finance_Users
+sarah.jones Security / IT SOC_Analysts
+
+### Outcome
+
+The environment now supports:
+
+- Centralised identity management
+- Group-based access modelling
+- Authentication event generation
+- Identity-based attack simulation
+- Windows Security Event analysis for SOC workflows
+
+### Environment Snapshot
+
+![AD Structure](screenshots/ad-structure-users-group.png)
+
+---
+
+## Repository Structure
+
+```text
+ADSOC-Active-Directory-Attack-Detection-Lab/
+│
+├── README.md
+├── screenshots/
+├── docs/
+├── detections/
+└── reports/
+```
+
+---
+
+## Planned Attack Scenarios
+
+- Password spraying
+- Failed authentication attempts
+- Account lockouts
+- Privilege escalation via group membership changes
+- Active Directory reconnaissance
+- Windows authentication abuse
+
+---
+
+## Skills Demonstrated
+
+- Active Directory Administration
+- Windows Server Configuration
+- Identity and Access Management (IAM)
+- Authentication & Authorisation Concepts
+- Enterprise User / Group Modelling
+- Security Event Generation
+- SOC Investigation Workflows
+- Detection Engineering Fundamentals
