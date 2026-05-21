@@ -81,3 +81,58 @@ During triage, analysts should investigate:
 ```text
 T1110.003 – Password Spraying
 ```
+
+## Detection – Account Lockout Activity
+
+### Detection Objective
+
+Detect and investigate account lockout activity caused by repeated failed authentication attempts against Active Directory accounts.
+
+### Detection Context
+
+Account lockout activity may indicate:
+
+- Password spraying attempts
+- Brute-force authentication attempts
+- Misconfigured services or stale credentials
+- Repeated user authentication failures
+
+Monitoring lockout events helps analysts identify suspicious authentication behaviour and determine whether failed authentication activity escalated into account access disruption.
+
+### Event Information
+
+| Field | Value |
+|---|---|
+| Event ID | `4740` |
+| Description | A user account was locked out |
+| Log Source | Windows Security Event Log |
+
+### Investigation Evidence
+
+Observed locked account:
+
+- `emma.wilson`
+
+Observed source system:
+
+- `WS01`
+
+Observed timestamp:
+
+- `21/05/2026 07:25 PM`
+
+### Investigation Considerations
+
+During triage, analysts should investigate:
+
+- Which account was locked
+- Which host generated the activity
+- Whether repeated failed logons preceded the lockout
+- Whether authentication failures targeted multiple users
+- Signs of password spraying or brute-force behaviour
+
+### MITRE ATT&CK Context
+
+```text
+T1110 – Brute Force
+```
