@@ -51,3 +51,40 @@ The authentication failures were generated against the Active Directory domain a
 ### Outcome
 
 The scenario successfully generated failed Active Directory authentication telemetry and validated visibility into suspicious authentication activity through Windows Security logs.
+
+
+## Scenario 3 – Account Lockout Investigation
+
+### Objective
+
+Simulate and investigate account lockout activity caused by repeated failed authentication attempts within an Active Directory environment.
+
+### Scenario
+
+Repeated failed authentication attempts were generated against the domain account `emma.wilson` until the account lockout threshold was reached.
+
+The activity originated from:
+
+```text
+WS01
+```
+
+The lockout event was validated and investigated through Windows Security logs on the Domain Controller (`DC01`).
+
+### Timeline
+
+| Timestamp | Activity |
+|---|---|
+| `21/05/2026 07:25 PM` | Repeated failed authentication attempts generated |
+| `21/05/2026 07:25 PM` | Account lockout observed |
+| `21/05/2026 07:25 PM` | Lockout event investigated in Windows Security logs |
+
+### Event Observed
+
+| Event ID | Description |
+|---|---|
+| `4740` | A user account was locked out |
+
+### Outcome
+
+The scenario successfully generated account lockout telemetry and validated visibility into authentication abuse activity through Windows Security logs.
