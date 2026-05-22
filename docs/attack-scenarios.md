@@ -134,3 +134,45 @@ Windows Security logs were investigated to validate authentication telemetry ass
 ### Outcome
 
 The scenario successfully simulated authenticated Active Directory reconnaissance and validated visibility into authentication telemetry generated from a non-Windows system (`KALI`) against the Domain Controller.
+
+
+## Scenario 5 – Privileged Group Membership Change Investigation
+
+### Objective
+
+Simulate and investigate privileged Active Directory group membership changes affecting high-value administrative groups.
+
+### Scenario
+
+A domain user account was added to a privileged Active Directory security group to simulate unauthorized privilege escalation behaviour.
+
+The following account was added:
+
+```text
+john.smith
+```
+
+The following privileged group was modified:
+
+```text
+Domain Admins
+```
+
+Windows Security logs on the Domain Controller (`DC01`) were investigated to validate privileged group membership telemetry.
+
+### Timeline
+
+| Timestamp | Activity |
+|---|---|
+| `22/05/2026 06:21 PM` | `john.smith` added to `Domain Admins` |
+| `22/05/2026 06:21 PM` | Security event investigated |
+
+### Event Observed
+
+| Event ID | Description |
+|---|---|
+| `4728` | A member was added to a security-enabled global group |
+
+### Outcome
+
+The scenario successfully simulated privileged group membership modification activity and validated visibility into privileged access changes through Windows Security logs.
