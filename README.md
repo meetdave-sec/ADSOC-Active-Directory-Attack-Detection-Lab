@@ -43,6 +43,8 @@ activity, and translating observed telemetry into detection logic.
               +----------------------+
 ```
 
+![ADSOC Lab Architecture](screenshots/adsoc-lab-architecture.png)
+
 ### Environment Components
 
   -----------------------------------------------------------------------

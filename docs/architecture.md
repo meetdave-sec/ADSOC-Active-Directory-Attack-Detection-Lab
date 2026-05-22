@@ -1,5 +1,8 @@
 # ADSOC Lab Architecture
 
+![ADSOC Lab Architecture](../screenshots/adsoc-lab-architecture.png)
+
+
 ## Overview
 
 The ADSOC lab simulates a small Active Directory enterprise environment designed to generate and investigate Windows Security telemetry relevant to SOC operations, authentication monitoring, Active Directory reconnaissance, and privileged access detection.
