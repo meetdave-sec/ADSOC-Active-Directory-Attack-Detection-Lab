@@ -6,11 +6,11 @@ Monitor Active Directory security group membership modifications that may indica
 
 ### Event Information
 
-| Field | Value |
-|---|---|
-| Event ID | `4728` |
+| Field       | Value                                                 |
+| ----------- | ----------------------------------------------------- |
+| Event ID    | `4728`                                                |
 | Description | A member was added to a security-enabled global group |
-| Log Source | Windows Security Event Log |
+| Log Source  | Windows Security Event Log                            |
 
 ### Why This Matters
 
@@ -43,11 +43,11 @@ Unlike brute force attacks that target one account repeatedly, password spraying
 
 ### Event Information
 
-| Field | Value |
-|---|---|
-| Event ID | `4625` |
+| Field       | Value                       |
+| ----------- | --------------------------- |
+| Event ID    | `4625`                      |
 | Description | An account failed to log on |
-| Log Source | Windows Security Event Log |
+| Log Source  | Windows Security Event Log  |
 
 ### Investigation Evidence
 
@@ -101,11 +101,11 @@ Monitoring lockout events helps analysts identify suspicious authentication beha
 
 ### Event Information
 
-| Field | Value |
-|---|---|
-| Event ID | `4740` |
+| Field       | Value                         |
+| ----------- | ----------------------------- |
+| Event ID    | `4740`                        |
 | Description | A user account was locked out |
-| Log Source | Windows Security Event Log |
+| Log Source  | Windows Security Event Log    |
 
 ### Investigation Evidence
 
@@ -135,4 +135,69 @@ During triage, analysts should investigate:
 
 ```text
 T1110 – Brute Force
+```
+
+## Detection – Active Directory Reconnaissance Activity
+
+### Detection Objective
+
+Detect and investigate authenticated Active Directory reconnaissance activity performed using valid domain credentials.
+
+### Detection Context
+
+After obtaining valid credentials, attackers commonly perform reconnaissance against Active Directory to enumerate:
+
+- Domain users
+- Security groups
+- Privileged groups
+- Administrative relationships
+
+This activity helps attackers understand domain structure and identify high-value targets for privilege escalation or lateral movement.
+
+### Event Information
+
+| Field       | Value                                 |
+| ----------- | ------------------------------------- |
+| Event ID    | `4624`                                |
+| Description | An account was successfully logged on |
+| Log Source  | Windows Security Event Log            |
+
+### Investigation Evidence
+
+Observed account:
+
+- `john.smith`
+
+Observed source system:
+
+- `KALI`
+
+Observed source IP:
+
+- `192.168.100.5`
+
+Observed timestamp:
+
+- `22/05/2026 05:39 PM`
+
+Observed reconnaissance activity:
+
+- `enumdomusers`
+- `enumdomgroups`
+
+### Investigation Considerations
+
+During triage, analysts should investigate:
+
+- Which account authenticated successfully
+- Whether authentication originated from expected systems
+- Whether non-Windows systems authenticated to the Domain Controller
+- Whether user/group enumeration occurred after authentication
+- Signs of privilege discovery or lateral movement preparation
+
+### MITRE ATT&CK Context
+
+```text
+T1087 – Account Discovery
+T1069 – Permission Group Discovery
 ```
