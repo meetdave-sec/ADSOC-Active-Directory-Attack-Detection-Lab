@@ -201,3 +201,66 @@ During triage, analysts should investigate:
 T1087 – Account Discovery
 T1069 – Permission Group Discovery
 ```
+
+## Detection – Privileged Group Membership Change
+
+### Detection Objective
+
+Detect and investigate modifications to privileged Active Directory security groups that may indicate unauthorized privilege escalation or administrative abuse.
+
+### Detection Context
+
+Attackers commonly target privileged Active Directory groups to obtain elevated permissions and administrative control over enterprise systems.
+
+Monitoring membership changes to sensitive groups helps analysts identify:
+
+- Unauthorized privilege escalation
+- Administrative misuse
+- Compromised account activity
+- Persistence through privileged access
+
+High-value groups may include:
+
+- `Domain Admins`
+- `Enterprise Admins`
+- `Administrators`
+- Custom privileged groups
+
+### Event Information
+
+| Field       | Value                                                 |
+| ----------- | ----------------------------------------------------- |
+| Event ID    | `4728`                                                |
+| Description | A member was added to a security-enabled global group |
+| Log Source  | Windows Security Event Log                            |
+
+### Investigation Evidence
+
+Observed account added:
+
+- `john.smith`
+
+Observed privileged group:
+
+- `Domain Admins`
+
+Observed timestamp:
+
+- `22/05/2026 06:21 PM`
+
+### Investigation Considerations
+
+During triage, analysts should investigate:
+
+- Who performed the group modification
+- Whether the membership change was authorized
+- Whether privileged access was expected for the account
+- Whether additional privilege escalation activity occurred
+- Whether other privileged groups were modified
+
+### MITRE ATT&CK Context
+
+```text
+T1098 – Account Manipulation
+T1078 – Valid Accounts
+```
