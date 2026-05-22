@@ -1,0 +1,7 @@
+// Detect Active Directory account lockout events
+// Event ID: 4740
+
+SecurityEvent
+| where EventID == 4740
+| project TimeGenerated, Account, Computer, Activity
+| order by TimeGenerated desc

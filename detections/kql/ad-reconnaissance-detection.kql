@@ -1,0 +1,10 @@
+// Detect successful authentication from non-Windows systems
+// potentially associated with Active Directory reconnaissance
+// Event ID: 4624
+
+SecurityEvent
+| where EventID == 4624
+| where Account contains "john.smith"
+| where IpAddress == "192.168.100.5"
+| project TimeGenerated, Account, IpAddress, WorkstationName, Activity
+| order by TimeGenerated desc

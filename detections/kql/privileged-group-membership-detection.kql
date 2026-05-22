@@ -1,0 +1,8 @@
+// Detect privileged Active Directory group membership changes
+// Event ID: 4728
+
+SecurityEvent
+| where EventID == 4728
+| where Activity contains "Domain Admins"
+| project TimeGenerated, Account, Activity, Computer
+| order by TimeGenerated desc
