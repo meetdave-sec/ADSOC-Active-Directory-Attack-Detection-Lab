@@ -14,11 +14,11 @@ The environment consists of:
 
 ## Network Architecture
 
-| System | Role | Operating System | Purpose |
-|---|---|---|---|
-| `DC01` | Domain Controller | Windows Server 2022 | Active Directory, authentication, security telemetry |
-| `WS01` | Workstation | Windows 11 Pro | Domain-joined client used for authentication scenarios |
-| `KALI` | Adversary Simulation | Kali Linux | Simulated reconnaissance and authentication activity |
+| System | Role                 | Operating System    | Purpose                                                |
+| ------ | -------------------- | ------------------- | ------------------------------------------------------ |
+| `DC01` | Domain Controller    | Windows Server 2022 | Active Directory, authentication, security telemetry   |
+| `WS01` | Workstation          | Windows 11 Pro      | Domain-joined client used for authentication scenarios |
+| `KALI` | Adversary Simulation | Kali Linux          | Simulated reconnaissance and authentication activity   |
 
 All systems operate within the same virtual lab network to simulate enterprise authentication and Active Directory interactions.
 
@@ -26,12 +26,12 @@ All systems operate within the same virtual lab network to simulate enterprise a
 
 ## Domain Environment
 
-| Configuration | Value |
-|---|---|
-| Domain Name | `adsoc.local` |
-| Domain Controller | `DC01` |
-| Workstation | `WS01` |
-| Adversary Host | `KALI` |
+| Configuration     | Value         |
+| ----------------- | ------------- |
+| Domain Name       | `adsoc.local` |
+| Domain Controller | `DC01`        |
+| Workstation       | `WS01`        |
+| Adversary Host    | `KALI`        |
 
 ---
 
@@ -41,24 +41,24 @@ The lab generates Windows Security telemetry used for detection engineering and 
 
 Observed Windows Security Event IDs include:
 
-| Event ID | Purpose |
-|---|---|
-| `4624` | Successful logon |
-| `4625` | Failed logon |
-| `4728` | Security group membership modification |
-| `4740` | Account lockout |
+| Event ID | Purpose                                |
+| -------- | -------------------------------------- |
+| `4624`   | Successful logon                       |
+| `4625`   | Failed logon                           |
+| `4728`   | Security group membership modification |
+| `4740`   | Account lockout                        |
 
 ---
 
 ## Implemented Scenarios
 
-| Scenario | Focus |
-|---|---|
-| Security Group Membership Monitoring | Identity and access monitoring |
-| Password Spraying Detection | Authentication abuse detection |
-| Account Lockout Investigation | Authentication investigation |
-| Active Directory Reconnaissance | Discovery and reconnaissance monitoring |
-| Privileged Group Monitoring | Privilege escalation monitoring |
+| Scenario                             | Focus                                   |
+| ------------------------------------ | --------------------------------------- |
+| Security Group Membership Monitoring | Identity and access monitoring          |
+| Password Spraying Detection          | Authentication abuse detection          |
+| Account Lockout Investigation        | Authentication investigation            |
+| Active Directory Reconnaissance      | Discovery and reconnaissance monitoring |
+| Privileged Group Monitoring          | Privilege escalation monitoring         |
 
 ---
 

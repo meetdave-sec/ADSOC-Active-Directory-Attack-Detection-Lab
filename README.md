@@ -1,201 +1,160 @@
 # ADSOC -- Active Directory Attack & Detection Lab
 
-## Project Overview
+## Overview
 
-ADSOC is an enterprise-style Active Directory Attack & Detection Lab
-designed to simulate identity-based attacks, Windows authentication
-workflows, and SOC investigation scenarios in a controlled environment.
+ADSOC is an enterprise-style cybersecurity lab designed to simulate
+**Active Directory attacks, Windows authentication telemetry, and SOC
+investigation workflows** in a controlled environment.
 
-The goal of this project is to build hands-on experience with:
+The project focuses on generating realistic Windows Security events,
+simulating identity-based attack scenarios, investigating authentication
+activity, and translating observed telemetry into detection logic.
+
+**Core focus areas:**
 
 -   Active Directory administration
--   Windows authentication and identity management
--   Enterprise user/group modelling
--   Security event generation and log analysis
--   Identity-focused attack simulation
--   SOC detection engineering and investigation workflows
+-   Authentication monitoring & investigation
+-   Identity-based attack simulation
+-   Privileged access monitoring
+-   Active Directory reconnaissance analysis
+-   Detection engineering fundamentals (KQL-style logic)
 
 ------------------------------------------------------------------------
 
 ## Lab Architecture
 
 ``` text
-Kali Linux (Attacker)
-        |
-        v
-Windows Server 2022 (DC01)
-        |
-        v
-Windows 11 Pro Workstation (WS01)
+                 +----------------------+
+                 |     Kali Linux       |
+                 | (Adversary System)   |
+                 +----------+-----------+
+                            |
+                            v
++--------------------------------------------------+
+|         Windows Server 2022 (DC01)              |
+| Active Directory + DNS + Authentication Services |
+|        Windows Security Event Telemetry          |
++------------------------+-------------------------+
+                         |
+                         v
+              +----------------------+
+              |  Windows 11 (WS01)  |
+              | Domain-Joined Client |
+              +----------------------+
 ```
 
-### Infrastructure Components
+### Environment Components
 
   -----------------------------------------------------------------------
-  Component                           Purpose
-  ----------------------------------- -----------------------------------
-  Kali Linux                          Attack simulation and adversary
-                                      activity
+  System                  Role                    Purpose
+  ----------------------- ----------------------- -----------------------
+  `DC01`                  Domain Controller       Active Directory, DNS,
+                                                  authentication, Windows
+                                                  Security telemetry
 
-  Windows Server 2022 (DC01)          Domain Controller, DNS,
-                                      authentication infrastructure
+  `WS01`                  Domain Workstation      Authentication activity
+                                                  and user simulation
 
-  Windows 11 Pro (WS01)               Domain-joined workstation for
-                                      authentication, telemetry, and
-                                      attack simulation
+  `KALI`                  Adversary Host          Active Directory
+                                                  reconnaissance and
+                                                  authentication testing
   -----------------------------------------------------------------------
 
-------------------------------------------------------------------------
+### Domain Configuration
 
-## Current Progress
-
--   [x] Windows Server 2022 deployed
--   [x] Static IP configured
--   [x] Active Directory Domain Services (AD DS) installed
--   [x] Domain Controller promotion completed
--   [x] Enterprise OU, user, and group structure configured
--   [x] Windows 11 domain join
--   [ ] Identity attack simulation
--   [ ] Detection engineering and investigation workflows
+  Setting             Value
+  ------------------- ---------------
+  Domain              `adsoc.local`
+  Domain Controller   `DC01`
+  Workstation         `WS01`
 
 ------------------------------------------------------------------------
 
-# Phase 1 -- Active Directory Infrastructure
+## Attack & Detection Scenarios
 
-## Windows Server Deployment
+  ------------------------------------------------------------------------
+  Scenario                   Event ID(s) Security Focus   MITRE ATT&CK
+  ---------------- --------------------- ---------------- ----------------
+  Password                        `4625` Failed           `T1110.003`
+  Spraying                               authentication   
+  Detection                              monitoring       
 
-Windows Server 2022 was deployed and configured as the foundation of the
-Active Directory environment.
+  Account Lockout                 `4740` Authentication   `T1110`
+  Investigation                          abuse            
+                                         investigation    
 
-### Configuration Completed
+  Active Directory                `4624` User & group     `T1087`, `T1069`
+  Reconnaissance                         discovery        
+                                         monitoring       
 
--   Hostname configured as `DC01`
--   Static IP configuration applied
--   Active Directory Domain Services (AD DS) installed
+  Privileged Group                `4728` Privilege        `T1098`, `T1078`
+  Membership                             escalation       
+  Change                                 monitoring       
 
-![Windows Server](screenshots/windows-server-overview.png)
-
-------------------------------------------------------------------------
-
-## Static IP Configuration
-
-  Setting           Value
-  ----------------- ------------------
-  IP Address        `192.168.100.10`
-  Subnet Mask       `255.255.255.0`
-  Default Gateway   `192.168.100.1`
-  Preferred DNS     `127.0.0.1`
-
-![Static IP Configuration](screenshots/static-ip-config.png)
+  Security Group                  `4728` Identity &       ---
+  Membership                             access           
+  Monitoring                             monitoring       
+  ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
-## Active Directory Domain Services (AD DS)
+## Detection Engineering
 
-The Active Directory Domain Services role was installed to prepare the
-server for Domain Controller promotion.
-
-![AD DS Installed](screenshots/ad-ds-installed.png)
-
-------------------------------------------------------------------------
-
-## Domain Controller Configuration
-
-`DC01` was promoted to a Domain Controller using Active Directory Domain
-Services (AD DS).
-
-  Setting        Value
-  -------------- -------------------------
-  Domain Name    `adsoc.local`
-  NetBIOS Name   `ADSOC`
-  Server Role    Domain Controller + DNS
-
-### Verification
-
-``` powershell
-whoami
-```
-
-Expected:
+The project includes **lab-oriented KQL-style detections** mapped to
+generated Windows Security telemetry.
 
 ``` text
-adsoc\administrator
+detections/kql/
+├── password-spraying-detection.kql
+├── account-lockout-detection.kql
+├── privileged-group-membership-detection.kql
+└── ad-reconnaissance-detection.kql
 ```
 
-![Domain Controller
-Verification](screenshots/domain-controller-verification.png)
+Detection logic focuses on:
+
+-   Failed authentication monitoring (`4625`)
+-   Account lockout visibility (`4740`)
+-   Privileged group membership monitoring (`4728`)
+-   Active Directory reconnaissance telemetry (`4624`)
 
 ------------------------------------------------------------------------
 
-## Active Directory Enterprise Configuration
+## Investigation Workflow
 
-### Organisational Units (OUs)
-
--   IT
--   HR
--   Finance
--   Servers
--   Workstations
--   Security Groups
-
-### Security Groups
-
--   IT_Admins
--   HR_Users
--   Finance_Users
--   SOC_Analysts
-
-### Example Domain Users
-
-  User          Department      Security Group
-  ------------- --------------- ----------------
-  john.smith    IT              IT_Admins
-  emma.wilson   HR              HR_Users
-  alex.brown    Finance         Finance_Users
-  sarah.jones   Security / IT   SOC_Analysts
-
-### Outcome
-
--   Centralised identity management
--   Group-based access modelling
--   Authentication event generation
--   Identity-based attack simulation
--   Windows Security Event analysis for SOC workflows
-
-![AD Structure](screenshots/ad-structure-users-group.png)
-
-------------------------------------------------------------------------
-
-## Domain-Joined Workstation Configuration
-
-A Windows 11 Pro workstation (`WS01`) was successfully joined to the
-`adsoc.local` Active Directory domain.
-
-### Workstation Configuration
-
-  Setting            Value
-  ------------------ ------------------------------------------
-  Hostname           `WS01`
-  Operating System   `Windows 11 Pro`
-  Domain             `adsoc.local`
-  Authentication     `Active Directory Domain Authentication`
-
-### Validation
-
-Verified successful domain authentication using a domain-managed user
-account.
-
-``` cmd
-whoami
-```
-
-Expected:
+Each scenario follows a SOC-style workflow:
 
 ``` text
-adsoc\john.smith
+Attack Simulation
+        ↓
+Windows Security Telemetry
+        ↓
+Event Investigation
+        ↓
+Detection Logic (KQL-style)
+        ↓
+Documentation & Reporting
 ```
 
-![Domain Joined Workstation](screenshots/domain-joined-workstation.png)
+------------------------------------------------------------------------
+
+## Investigation Evidence
+
+### Password Spraying Detection (`4625`)
+
+![Password Spraying Detection](screenshots/password-spraying-alex-4625.png)
+
+### Account Lockout Investigation (`4740`)
+
+![Account Lockout Investigation](screenshots/account-lockout-4740.png)
+
+### Active Directory Reconnaissance (`4624`)
+
+![AD Reconnaissance Investigation](screenshots/ad-recon-authenticated-4624.png)
+
+### Privileged Group Membership Change (`4728`)
+
+![Privileged Group Membership Change](screenshots/domain-admin-membership-change-4728.png)
 
 ------------------------------------------------------------------------
 
@@ -206,31 +165,62 @@ ADSOC-Active-Directory-Attack-Detection-Lab/
 │
 ├── README.md
 ├── screenshots/
+│
 ├── docs/
+│   ├── architecture.md
+│   ├── attack-scenarios.md
+│   └── detections.md
+│
 ├── detections/
+│   ├── kql/
+│   └── notes/
+│
 └── reports/
 ```
 
 ------------------------------------------------------------------------
 
-## Planned Attack Scenarios
+## Documentation & Investigation Reports
 
--   Password spraying
--   Failed authentication attempts
--   Account lockouts
--   Privilege escalation via group membership changes
--   Active Directory reconnaissance
--   Windows authentication abuse
+  -----------------------------------------------------------------------
+  Folder                              Purpose
+  ----------------------------------- -----------------------------------
+  `docs/`                             Architecture, scenarios, detection
+                                      logic, and security context
+
+  `reports/`                          SOC-style investigation reports
+                                      with findings and evidence
+
+  `detections/notes/`                 Analyst investigation notes and
+                                      triage guidance
+
+  `detections/kql/`                   Lab-oriented KQL detection logic
+  -----------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
 ## Skills Demonstrated
 
 -   Active Directory Administration
--   Windows Server Configuration
--   Identity and Access Management (IAM)
--   Authentication & Authorisation Concepts
--   Enterprise User / Group Modelling
--   Security Event Generation
--   SOC Investigation Workflows
+-   Windows Authentication & Identity Management
+-   Windows Security Event Investigation
+-   Authentication Abuse Detection
+-   Privileged Access Monitoring
+-   Active Directory Reconnaissance Investigation
 -   Detection Engineering Fundamentals
+-   SOC Investigation Workflows
+-   MITRE ATT&CK Mapping
+
+------------------------------------------------------------------------
+
+## What This Project Demonstrates
+
+This project demonstrates the ability to:
+
+-   Build and manage an Active Directory environment
+-   Generate realistic Windows Security telemetry
+-   Investigate authentication and identity-related events
+-   Simulate attacker behaviour in a controlled lab
+-   Correlate suspicious activity with observable logs
+-   Create KQL-style detection logic from observed telemetry
+-   Document investigations using a SOC workflow
